@@ -1,3 +1,8 @@
+/*
+	Name:	James Tremper
+	Date:	2015-05-07
+	Desc:	Project 2 Submission
+ */
 var gl;
 
 var shaderProgram;

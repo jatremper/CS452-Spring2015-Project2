@@ -1,3 +1,13 @@
-name, date, description
+Name:	James Tremper
+Date:	2015-05-07
+Desc:	Project 2 Submission
 
-be sure to include complete details of how to interact with your application
+Currently consists of a 3-dimensional shape that can be moved in all directions, and rotated as desired.
+
+Input:
+	Left/Right Arrows	Rotate along the x-axis
+	Up/Down Arrows		Rotate along the y-axis
+	Page Up/Down		Rotate along the z-axis
+	A/D					Translate along the x-axis
+	W/S					Translate along the y-axis
+	Q/E					Translate along the z-axis
