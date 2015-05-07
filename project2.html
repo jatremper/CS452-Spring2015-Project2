@@ -1,28 +1,64 @@
-<!DOCTYPE html>
+<!--
+	Name:	James Tremper
+	Date:	2015-05-06
+	Desc:	Project 2 Submission
+
+	References:
+
+  -->
+
 <html>
 <head>
-<script id="vertex-shader" type="x-shader/x-vertex">
-attribute vec4 vPosition;
-void main()
-{
-gl_Position = vPosition;
-}
-</script>
-<script id="fragment-shader" type="x-shader/x-fragment">
-precision mediump float;
-void main()
-{
-gl_FragColor = vec4( 1.0, 1.0, 1.0, 1.0 );
-}
-</script>
-<script type="text/javascript" src="../Common/webgl-utils.js"></script>
-<script type="text/javascript" src="../Common/initShaders.js"></script>
-<script type="text/javascript" src="../Common/MV.js"></script>
-<script type="text/javascript" src="project1.js"></script>
+	<title>Computer Graphics - Lab 3</title>
+	<script type="text/javascript" src="../common/webgl-utils.js"></script>
+	<script type="text/javascript" src="../common/MV.js"></script>
+	<script type="text/javascript" src="project2.js"></script>
+
+	<script id="shader-vs" type="x-shader/x-vertex">
+		attribute vec3 aVertexPosition;
+		attribute vec4 aVertexColor;
+		attribute vec3 aVertexNormal;
+
+		uniform mat4 uMVMatrix;
+		uniform mat4 uPMatrix;
+		uniform mat3 uNMatrix;
+
+		uniform vec3 uAmbientColor;
+		uniform vec3 uLightingDirection;
+		uniform vec3 uDirectionalColor;
+
+		varying vec4 vColor;
+		varying vec3 vLightWeighting;
+
+		void main(void)
+		{
+		// QUESTION: Whats the last multiplication for?
+			gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+			vColor = aVertexColor;
+
+			vec3 transformedNormal = uNMatrix * aVertexNormal;
+			float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+			vLightWeighting = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+		}
+	</script>
+
+	<script id="shader-fs" type="x-shader/x-fragment">
+		precision mediump float;
+
+		varying vec4 vColor;
+		varying vec3 vLightWeighting;
+
+		void main(void)
+		{
+			gl_FragColor = vec4(vColor.rgb * vLightWeighting, vColor.a);
+		}
+	</script>
+
 </head>
+
 <body>
-<canvas id="gl-canvas" width="512" height="512">
-Oops ... your browser doesn't support the HTML5 canvas element
-</canvas>
+<center>
+	<canvas id="gl-canvas" width="1024" height="512">If you can see this, something has gone wrong.</canvas>
+</center>
 </body>
 </html>
